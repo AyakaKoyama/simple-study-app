@@ -8,8 +8,8 @@ export const Study = () => {
   //初期値に設定
   const [recordList, setRecordList] = useState(records);
 
-  useEffect(()=>{
-     const getRecords = async () => {
+  useEffect(() => {
+    const getRecords = async () => {
       try {
         const records = await getAllRecords();
         setRecords(records);
@@ -21,6 +21,8 @@ export const Study = () => {
     };
     getRecords();
   }, [])
+
+  console.log();
 
   // recordsが更新されるたびにrecordListも更新
   useEffect(() => {
