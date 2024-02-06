@@ -5,18 +5,29 @@ import { getAllRecords } from './utils/supabaseFunctions';
 export const Study = () => {
 
   const [records, setRecords] = useState([]);
+  //初期値に設定
+  const [recordList, setRecordList] = useState(records);
+
   useEffect(()=>{
-    const getRecords =async ()=>{
-      const records = await getAllRecords();
-      setRecords(records);
-      console.log(records)
+     const getRecords = async () => {
+      try {
+        const records = await getAllRecords();
+        setRecords(records);
+        //setRecordList(records); // データベースから取得したデータをrecordListの初期値に設定
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
     getRecords();
   }, [])
 
+  // recordsが更新されるたびにrecordListも更新
+  useEffect(() => {
+    setRecordList(records);
+  }, [records]);
+
   const [studyContent, setStudyContent] = useState("");
   const [studyTime, setStudyTime] = useState(0);
-  const [recordList, setRecordList] = useState([]);
   const [error, setError] = useState("");
 
 
@@ -88,6 +99,7 @@ export const Study = () => {
           学習内容:{studyContent} 時間: {studyTime}
         </div>
         <ul>
+          {/* ここで出力されるはず */}
           {recordList.map((recordData, index) => {
             return (
               <li key={index}>
