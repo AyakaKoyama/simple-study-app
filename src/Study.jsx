@@ -13,7 +13,8 @@ export const Study = () => {
       try {
         const records = await getAllRecords();
         setRecords(records);
-        //setRecordList(records); // データベースから取得したデータをrecordListの初期値に設定
+        //
+        setRecordList(records); // データベースから取得したデータをrecordListの初期値に設定
       } catch (error) {
         console.error("Error fetching data:", error);
       }
