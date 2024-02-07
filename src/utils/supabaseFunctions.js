@@ -1,8 +1,18 @@
-import {supabase} from "./supabase"
+import { supabase } from "./supabase"
 
 
-export const getAllRecords =async()=>{
+export const getAllRecords = async () => {
 
-    const records = await supabase.from ("study-record").select("*");
+    const records = await supabase.from("study-record").select("*");
     return records.data;
+}
+
+
+export const addAllRecords = async (studyContent, studyTime) => {
+    await supabase
+        .from('study-record')
+        .insert([
+            { studyContent, studyTime },
+        ])
+        .select()
 }

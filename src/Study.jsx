@@ -1,44 +1,38 @@
 import { useEffect, useState } from 'react'
 import React from "react";
-import { getAllRecords } from './utils/supabaseFunctions';
+import { getAllRecords, addAllRecords } from './utils/supabaseFunctions';
 
 export const Study = () => {
 
-  const [records, setRecords] = useState([]);
-  //初期値に設定
-  const [recordList, setRecordList] = useState(records);
-
+  //const [records, setRecords] = useState([]);
+  const [studyContent, setStudyContent] = useState("");
+  const [studyTime, setStudyTime] = useState(0);
+  const [error, setError] = useState("");
+  const [recordList, setRecordList] = useState([]);
+  //データセット
   useEffect(() => {
     const getRecords = async () => {
       try {
         const records = await getAllRecords();
-        setRecords(records);
-        //
-        setRecordList(records); // データベースから取得したデータをrecordListの初期値に設定
+        console.log(records);
+        setRecordList(records);
+
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
     getRecords();
-  }, [])
-
-  console.log();
-
-  // recordsが更新されるたびにrecordListも更新
-  useEffect(() => {
-    setRecordList(records);
-  }, [records]);
-
-  const [studyContent, setStudyContent] = useState("");
-  const [studyTime, setStudyTime] = useState(0);
-  const [error, setError] = useState("");
+  },
+    [])
 
 
-  const onAddRecord = () => {
+  //登録ボタン押下
+  const onAddRecord = async () => {
     if (!studyTime && !studyContent) {
       setError("入力されていない項目があります。");
       return;
     }
+
     if (studyContent === "") {
       setError("学習内容を入力してください");
       return;
@@ -47,16 +41,18 @@ export const Study = () => {
       setError("学習時間を入力してください");
       return;
     }
-
-    const newRecord = {
-      title: studyContent,
-      time: studyTime,
-    };
-    const newRecordList = [...recordList, newRecord];
-    setRecordList(newRecordList);
-    setStudyContent("");
-    setStudyTime(0);
-    setError("");
+    //データ追加
+    try {
+      await addAllRecords(studyContent, studyTime);
+      const newRecord = { studyContent, studyTime };
+      setRecordList([...recordList, newRecord]);
+      setStudyContent("");
+      setStudyTime(0);
+      setError("");
+    } catch (error) {
+      console.error("Error adding record:", error);
+      setError("レコードの追加中にエラーが発生しました");
+    }
   };
 
   const onChangeStudyContent = (event) => {
@@ -74,7 +70,7 @@ export const Study = () => {
   };
 
   const totalTime = recordList.reduce(
-    (acc, record) => acc + parseInt(record.time, 10),
+    (acc, record) => acc + parseInt(record.studyTime, 10),
     0
   );
   return (
@@ -107,7 +103,7 @@ export const Study = () => {
             return (
               <li key={index}>
                 <div>
-                  <p>{`${recordData.title} ${recordData.time}時間`}</p>
+                  <p>{`${recordData.studyContent} ${recordData.studyTime}時間`}</p>
                 </div>
               </li>
             );
