@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import React from "react";
-import { getAllRecords, addAllRecords } from './utils/supabaseFunctions';
+import { getAllRecords, addAllRecords, deleteRecords } from './utils/supabaseFunctions';
 
 export const Study = () => {
 
@@ -73,6 +73,19 @@ export const Study = () => {
     (acc, record) => acc + parseInt(record.studyTime, 10),
     0
   );
+
+  //削除ボタン
+  const onClickDelete = async (index, studyContent, studyTime) => {
+    try {
+      await deleteRecords(studyContent, studyTime);
+      const newRecords = [...recordList];
+      newRecords.splice(index, 1);
+      setRecordList(newRecords);
+    } catch (error) {
+      console.error("Error deleting record:", error);
+    }
+  };
+
   return (
     <>
       <div>
@@ -104,6 +117,7 @@ export const Study = () => {
               <li key={index}>
                 <div>
                   <p>{`${recordData.studyContent} ${recordData.studyTime}時間`}</p>
+                  <button onClick={() => onClickDelete(index, recordData.studyContent, recordData.studyTime)}>削除</button>
                 </div>
               </li>
             );

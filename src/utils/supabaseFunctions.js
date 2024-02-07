@@ -16,3 +16,10 @@ export const addAllRecords = async (studyContent, studyTime) => {
         ])
         .select()
 }
+
+export const deleteRecords = async (studyContent, studyTime) => {
+    await supabase
+      .from('study-record')
+      .delete()
+      .match({ studyContent, studyTime });    
+  };
