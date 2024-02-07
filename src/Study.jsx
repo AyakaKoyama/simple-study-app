@@ -89,7 +89,7 @@ export const Study = () => {
   return (
     <>
       <div>
-        <h1>勉強記録一覧</h1>
+        <h1>学習記録一覧</h1>
         <div>
           <input
             placeholder="学習内容"
@@ -111,7 +111,7 @@ export const Study = () => {
           学習内容:{studyContent} 時間: {studyTime}
         </div>
         <ul>
-          {/* ここで出力されるはず */}
+          
           {recordList.map((recordData, index) => {
             return (
               <li key={index}>
