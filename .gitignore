@@ -11,6 +11,8 @@ node_modules
 *.local
 .env.local
 firebase-cicd.json
+dist
+dist-ssr
 
 # Editor directories and files
 .vscode/*
