@@ -1,8 +1,7 @@
 name: Scheduled deploy
 
 on:
-  schedule:
-    - cron: "0 6 * * *"
+  push:
   workflow_dispatch:
 
 jobs:
@@ -35,8 +34,6 @@ jobs:
           cache: "npm"
       - name: Install firebase-tools
         run: npm install --save-dev firebase-tools
-      - name: Check if dist directory exists
-        run: ls dist
       - name: Decode Firebase service account key
         run: |
           echo "${{ secrets.FIREBASE_KEY }}" | base64 -d > ./firebase-key.json
