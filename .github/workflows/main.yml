@@ -19,7 +19,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run build
-        run: npm run buildF
+        run: npm run build
 
   deploy:
     name: deploy
