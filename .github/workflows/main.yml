@@ -35,6 +35,8 @@ jobs:
           cache: "npm"
       - name: Install firebase-tools
         run: npm install --save-dev firebase-tools
+      - name: ls
+        run: ls
       - name: Decode Firebase service account key
         run: |
           echo "${{ secrets.FIREBASE_KEY }}" | base64 -d > ./firebase-key.json
