@@ -54,7 +54,7 @@ test("削除ボタンを押すと学習記録が削除される", async () => {
     // 初期の学習記録の数を取得
     const initialRecords = screen.getAllByTestId("record");
 
-    // 削除ボタンをクリック
+    // 削除ボタンクリック
     const deleteButton = screen.getAllByTestId("delete")[0];
     fireEvent.click(deleteButton);
 
