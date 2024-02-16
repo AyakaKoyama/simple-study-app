@@ -14,7 +14,6 @@ export const Study = () => {
     const getRecords = async () => {
       try {
         const records = await getAllRecords();
-        console.log(records);
         setRecordList(records);
 
       } catch (error) {
@@ -88,7 +87,7 @@ export const Study = () => {
   return (
     <>
       <div>
-        <h1>学習記録一覧</h1>
+        <h1 data-testid="title">学習記録一覧</h1>
         <div>
           <input
             placeholder="学習内容"
