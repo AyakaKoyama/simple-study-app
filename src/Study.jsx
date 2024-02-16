@@ -93,6 +93,7 @@ export const Study = () => {
             placeholder="学習内容"
             value={studyContent}
             onChange={onChangeStudyContent}
+            data-testid="study-content-input"
           />
         </div>
         <div>
@@ -101,6 +102,7 @@ export const Study = () => {
             type="number"
             value={studyTime}
             onChange={onChangeStudyTime}
+            data-testid="study-time-input"
           />
           <button onClick={onAddRecord }data-testid="submit">登録</button>
         </div>
