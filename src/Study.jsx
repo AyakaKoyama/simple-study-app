@@ -102,7 +102,7 @@ export const Study = () => {
             value={studyTime}
             onChange={onChangeStudyTime}
           />
-          <button onClick={onAddRecord}>登録</button>
+          <button onClick={onAddRecord }data-testid="submit">登録</button>
         </div>
         {error && <div style={{ color: "red" }}>{error}</div>}
         <div>
