@@ -43,7 +43,7 @@ export const Study = () => {
     //データ追加
     try {
       const data = await addAllRecords(studyContent, studyTime);
-      const newRecord = { id: data.id, studyContent: studyContent, studyTime: studyTime};
+      const newRecord = { id: data.id, studyContent: studyContent, studyTime: studyTime };
       setRecordList([...recordList, newRecord]);
       setStudyContent("");
       setStudyTime(0);
@@ -104,20 +104,20 @@ export const Study = () => {
             onChange={onChangeStudyTime}
             data-testid="study-time-input"
           />
-          <button onClick={onAddRecord }data-testid="submit">登録</button>
+          <button onClick={onAddRecord} data-testid="submit">登録</button>
         </div>
         {error && <div style={{ color: "red" }}>{error}</div>}
         <div>
           学習内容:{studyContent} 時間: {studyTime}
         </div>
         <ul>
-          
+
           {recordList.map((recordData, index) => {
             return (
-              <li key={recordData.id}>
+              <li key={recordData.id} data-testid="record">
                 <div>
-                  <p>{`${recordData.studyContent} ${recordData.studyTime}時間`}</p>
-                  <button onClick={() => onClickDelete(recordData.id)}>削除</button>
+                  <p >{`${recordData.studyContent} ${recordData.studyTime}時間`}</p>
+                  <button onClick={() => onClickDelete(recordData.id)} data-testid="delete">削除</button>
                 </div>
               </li>
             );
