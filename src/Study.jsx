@@ -43,8 +43,8 @@ export const Study = () => {
     }
     //データ追加
     try {
-      await addAllRecords(studyContent, studyTime);
-      const newRecord = { studyContent, studyTime };
+      const data = await addAllRecords(studyContent, studyTime);
+      const newRecord = { id: data.id, studyContent: studyContent, studyTime: studyTime};
       setRecordList([...recordList, newRecord]);
       setStudyContent("");
       setStudyTime(0);
@@ -63,7 +63,7 @@ export const Study = () => {
   const onChangeStudyTime = (event) => {
     const inputValue = event.target.value;
     if (/^\d*$/.test(inputValue)) {
-      setStudyTime(inputValue);
+      setStudyTime(parseInt(inputValue));
       setError("学習時間を入力してください");
       setError(""); //値が入力されたらエラーを初期化し非表示にする
     }
@@ -75,11 +75,10 @@ export const Study = () => {
   );
 
   //削除ボタン
-  const onClickDelete = async (index, studyContent, studyTime) => {
+  const onClickDelete = async (id) => {
     try {
-      await deleteRecords(studyContent, studyTime);
-      const newRecords = [...recordList];
-      newRecords.splice(index, 1);
+      await deleteRecords(id);
+      const newRecords = recordList.filter((r) => r.id !== id);
       setRecordList(newRecords);
     } catch (error) {
       console.error("Error deleting record:", error);
@@ -114,10 +113,10 @@ export const Study = () => {
           
           {recordList.map((recordData, index) => {
             return (
-              <li key={index}>
+              <li key={recordData.id}>
                 <div>
                   <p>{`${recordData.studyContent} ${recordData.studyTime}時間`}</p>
-                  <button onClick={() => onClickDelete(index, recordData.studyContent, recordData.studyTime)}>削除</button>
+                  <button onClick={() => onClickDelete(recordData.id)}>削除</button>
                 </div>
               </li>
             );

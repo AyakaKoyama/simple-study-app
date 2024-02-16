@@ -9,17 +9,18 @@ export const getAllRecords = async () => {
 
 
 export const addAllRecords = async (studyContent, studyTime) => {
-    await supabase
+    const response = await supabase
         .from('study-record')
         .insert([
             { studyContent, studyTime },
         ])
         .select()
+    return (response.data[0])
 }
 
-export const deleteRecords = async (studyContent, studyTime) => {
+export const deleteRecords = async (id) => {
     await supabase
-      .from('study-record')
-      .delete()
-      .match({ studyContent, studyTime });    
-  };
+        .from('study-record')
+        .delete()
+        .match({ id });
+};
