@@ -23,6 +23,9 @@ jobs:
     name: ci
     runs-on: ubuntu-latest
     needs: build
+    env:
+     VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+     VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -34,6 +37,7 @@ jobs:
         run: npm i
       - name: test
         run: npm run test
+
   deploy:
     name: deploy
     runs-on: ubuntu-latest
